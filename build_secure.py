@@ -39,21 +39,28 @@ with open(config_path, 'w') as f:
     f.write(SESSION_KEY)
 
 # Nuitka command with MAXIMUM security options (compatible with Nuitka 4.x)
+# Change to project directory first for relative paths
+original_dir = os.getcwd()
+os.chdir(PROJECT_ROOT)
+
 nuitka_cmd = [
     sys.executable, '-m', 'nuitka',
     
     # === COMPILATION MODE ===
-    '--mode=standalone',         # Standalone executable
-    '--deployment',              # Production mode (remove debug info)
+    '--mode=standalone',         # Standalone = exe + libs folder next to it (recommended)
+    '--deployment',               # Production mode (remove debug info)
+    
+    # === PYTHON FLAGS ===
+    '--python-flag=no_site',      # Avoid site packages issues
     
     # === ENABLE PLUGINS ===
-    '--enable-plugin=pyqt5',     # Enable PyQt5 plugin for Qt support
+    '--enable-plugin=pyqt5',      # Enable PyQt5 plugin for Qt support
     
     # === ANTI-BLOAT CONFIG ===
-    '--user-package-configuration-file=nuitka.ini',  # Ignore unwanted imports like IPython
+    '--user-package-configuration-file=nuitka.ini',  # Ignore unwanted imports
     
     # === FOLLOW IMPORTS ===
-    '--follow-imports',          # Include all dependencies
+    '--follow-imports',            # Include all dependencies
     
     # === PACKAGE INCLUSION ===
     '--include-package=PyQt5',
@@ -65,14 +72,14 @@ nuitka_cmd = [
     '--include-package=idna',
     '--include-package=cryptography',
     
-    # === PLUGIN DIRECTORIES ===
-    f'--include-plugin-directory={os.path.join(PROJECT_ROOT, "core")}',
-    f'--include-plugin-directory={os.path.join(PROJECT_ROOT, "gui")}',
-    f'--include-plugin-directory={os.path.join(PROJECT_ROOT, "security")}',
-    f'--include-plugin-directory={os.path.join(PROJECT_ROOT, "utils")}',
+    # === PLUGIN DIRECTORIES (use relative paths) ===
+    '--include-plugin-directory=core',
+    '--include-plugin-directory=gui',
+    '--include-plugin-directory=security',
+    '--include-plugin-directory=utils',
     
-    # === DATA FILES ===
-    f'--include-data-dir={LIBS_DIR}=libs',
+    # === DATA FILES (use relative paths) ===
+    '--include-data-dir=libs=libs',
     
     # === WINDOWS SETTINGS ===
     '--windows-console-mode=disable',  # Hide console
@@ -81,19 +88,19 @@ nuitka_cmd = [
     '--no-deployment-flag=self-execution',  # Prevent re-execution attacks
     
     # === OUTPUT DIRECTORY ===
-    f'--output-dir={OUTPUT_DIR}',
+    '--output-dir=build/nuitka_secure',
     
     # === MAIN SCRIPT ===
-    MAIN_SCRIPT,
+    'main.py',
 ]
 
 # Filter out empty arguments
 nuitka_cmd = [arg for arg in nuitka_cmd if arg]
 
 print(f"\n📁 Project Root: {PROJECT_ROOT}")
-print(f"📝 Main Script: {MAIN_SCRIPT}")
-print(f"💾 Output Directory: {OUTPUT_DIR}")
-print(f"📚 Libs Directory: {LIBS_DIR}")
+print(f"📝 Main Script: main.py")
+print(f"💾 Output Directory: build/nuitka_secure")
+print(f"📚 Libs Directory: libs")
 
 print("\n" + "=" * 80)
 print("⚙️  Starting Nuitka Compilation with Maximum Security...")

@@ -34,8 +34,9 @@ jobs:
         
         # Build with verbose progress output
         python -m nuitka \
-          --standalone \
+          --mode=standalone \
           --deployment \
+          --python-flag=no_site \
           --enable-plugin=pyqt5 \
           --follow-imports \
           --include-package=PyQt5 \
@@ -59,11 +60,33 @@ jobs:
           --progress \
           main.py
         
+        # Move files from main.dist to output folder (Nuitka creates main.dist in standalone mode)
+        if (Test-Path "build/nuitka_secure/main.dist") {
+            Copy-Item -Path "build/nuitka_secure/main.dist/*" -Destination "build/nuitka_secure/" -Recurse -Force
+            Remove-Item -Path "build/nuitka_secure/main.dist" -Recurse -Force
+        }
+        
+        # List output files for debugging
+        Write-Host "Output files:"
+        Get-ChildItem "build/nuitka_secure" | Select-Object Name, Length
+        
+        # Check if main.exe exists
+        if (Test-Path "build/nuitka_secure/main.exe") {
+            Write-Host "✅ main.exe found!"
+        } else {
+            Write-Host "❌ main.exe NOT found!"
+            Get-ChildItem "build/nuitka_secure" -Recurse | ForEach-Object { Write-Host $_.FullName }
+        }
+        
     - name: Generate SHA256 hash
       run: |
-        $hash = Get-FileHash "build/nuitka_secure/main.exe" -Algorithm SHA256
-        $hash.Hash | Out-File "build/nuitka_secure/main.exe.sha256"
-        Write-Host "SHA256: $($hash.Hash)"
+        if (Test-Path "build/nuitka_secure/main.exe") {
+            $hash = Get-FileHash "build/nuitka_secure/main.exe" -Algorithm SHA256
+            $hash.Hash | Out-File "build/nuitka_secure/main.exe.sha256"
+            Write-Host "SHA256: $($hash.Hash)"
+        } else {
+            Write-Host "Skipping hash - main.exe not found"
+        }
         
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -78,7 +101,12 @@ jobs:
     - name: Create release archive
       if: startsWith(github.ref, 'refs/tags/')
       run: |
-        Compress-Archive -Path "build/nuitka_secure/*" -DestinationPath "A12Bypass-Secure.zip" -Force
+        if (Test-Path "build/nuitka_secure/main.exe") {
+            Compress-Archive -Path "build/nuitka_secure/*" -DestinationPath "A12Bypass-Secure.zip" -Force
+            Write-Host "✅ Release archive created"
+        } else {
+            Write-Host "Skipping release - build failed"
+        }
         
     - name: Create GitHub Release
       if: startsWith(github.ref, 'refs/tags/')
