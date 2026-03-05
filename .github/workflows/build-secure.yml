@@ -44,7 +44,7 @@ jobs:
         
         # Build with verbose progress output
         python -m nuitka \
-          --mode=standalone \
+          --mode=onefile \
           --deployment \
           --python-flag=no_site \
           --enable-plugin=pyqt5 \

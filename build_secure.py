@@ -47,7 +47,7 @@ nuitka_cmd = [
     sys.executable, '-m', 'nuitka',
     
     # === COMPILATION MODE ===
-    '--mode=standalone',         # Standalone = exe + libs folder next to it (recommended)
+    '--mode=onefile',         # Onefile = single exe (works with external libs at runtime)
     '--deployment',               # Production mode (remove debug info)
     
     # === PYTHON FLAGS ===
