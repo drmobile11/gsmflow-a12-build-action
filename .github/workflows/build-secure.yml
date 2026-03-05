@@ -42,19 +42,15 @@ jobs:
         # Install Nuitka directly for better control
         pip install nuitka --upgrade
         
-        # Build with verbose progress output (onefile mode)
-        python -m nuitka --mode=onefile --deployment --python-flag=no_site --enable-plugin=pyqt5 --follow-imports --include-package=PyQt5 --include-package=pymobiledevice3 --include-package=requests --include-package=urllib3 --include-package=certifi --include-package=chardet --include-package=idna --include-package=cryptography --include-plugin-directory=core --include-plugin-directory=gui --include-plugin-directory=security --include-plugin-directory=utils --include-data-dir=libs=libs --windows-console-mode=disable --no-deployment-flag=self-execution --output-dir=build/nuitka_secure --user-package-configuration-file=nuitka.ini --verbose --progress main.py
+        # Build with verbose output (onefile mode)
+        python -m nuitka --mode=onefile --deployment --python-flag=no_site --enable-plugin=pyqt5 --follow-imports --include-package=PyQt5 --include-package=pymobiledevice3 --include-package=requests --include-package=urllib3 --include-package=certifi --include-package=chardet --include-package=idna --include-package=cryptography --include-plugin-directory=core --include-plugin-directory=gui --include-plugin-directory=security --include-plugin-directory=utils --include-data-dir=libs=libs --windows-console-mode=disable --no-deployment-flag=self-execution --output-dir=build/nuitka_secure --user-package-configuration-file=nuitka.ini --verbose main.py
         
-        # List output files for debugging (onefile mode - no main.dist folder)
+        # List output files for debugging
         Write-Host "Output files:"
-        Get-ChildItem "build/nuitka_secure" | Select-Object Name, Length
-        
-        # Check if main.exe exists
-        if (Test-Path "build/nuitka_secure/main.exe") {
-            Write-Host "✅ main.exe found!"
+        if (Test-Path "build/nuitka_secure") {
+            Get-ChildItem "build/nuitka_secure" | Select-Object Name, Length
         } else {
-            Write-Host "❌ main.exe NOT found!"
-            Get-ChildItem "build/nuitka_secure" -Recurse | ForEach-Object { Write-Host $_.FullName }
+            Write-Host "Build folder not found"
         }
         
     - name: Generate SHA256 hash

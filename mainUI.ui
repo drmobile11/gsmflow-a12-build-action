@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1000</width><height>600</height></rect>
+  </property>
+
+  <property name="minimumSize">
+   <size><width>900</width><height>500</height></size>
+  </property>
+
+  <property name="windowTitle">
+   <string>A12 Bypass Tool</string>
+  </property>
+
+  <!-- GLOBAL STYLE -->
+  <property name="styleSheet">
+   <string notr="true">
+QMainWindow {
+    background-color: #000000;
+    color: #e5e7eb;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+}
+QWidget {
+    background-color: transparent;
+    color: #e5e7eb;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+}
+QLabel {
+    color: #e5e7eb;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+}
+QPushButton {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 13px;
+}
+QPushButton:hover {
+    background: #3b82f6;
+}
+QPushButton:pressed {
+    background: #1d4ed8;
+}
+QPushButton:disabled {
+    background: #2d313a;
+    color: #6b7280;
+}
+QTextEdit {
+    background: #0a0a0a;
+    border: 1px solid #1f1f1f;
+    border-radius: 8px;
+    padding: 8px;
+    color: #e5e7eb;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 12px;
+}
+QProgressBar {
+    background: #0a0a0a;
+    border: 1px solid #1f1f1f;
+    border-radius: 6px;
+    height: 10px;
+    text-align: center;
+}
+QProgressBar::chunk {
+    background: #2563eb;
+    border-radius: 6px;
+}
+QGroupBox {
+    background: #0f0f0f;
+    border: 1px solid #1f1f1f;
+    border-radius: 12px;
+    margin-top: 10px;
+    padding-top: 18px;
+    font-weight: 600;
+    font-size: 14px;
+}
+QGroupBox::title {
+    color: #9ca3af;
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 10px;
+}
+QFrame#panel {
+    background: #0f0f0f;
+    border: 1px solid #1f1f1f;
+    border-radius: 12px;
+}
+   </string>
+  </property>
+
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout">
+    <property name="spacing"><number>16</number></property>
+    <property name="leftMargin"><number>16</number></property>
+    <property name="topMargin"><number>16</number></property>
+    <property name="rightMargin"><number>16</number></property>
+    <property name="bottomMargin"><number>16</number></property>
+
+    <!-- LEFT COLUMN -->
+    <item>
+     <layout class="QVBoxLayout">
+      <property name="spacing"><number>14</number></property>
+
+      <!-- Header -->
+      <item>
+       <layout class="QVBoxLayout">
+        <property name="spacing"><number>4</number></property>
+        <item>
+         <widget class="QLabel">
+          <property name="text"><string>📱 A12 Bypass Tool</string></property>
+          <property name="font"><font><pointsize>16</pointsize><weight>75</weight><bold>true</bold></font></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel">
+          <property name="text"><string>iOS Activation Bypass</string></property>
+          <property name="styleSheet"><string notr="true">color: #6b7280; font-size: 12px;</string></property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+
+      <!-- Device Info Panel -->
+      <item>
+       <widget class="QFrame" name="panel">
+        <property name="minimumWidth"><number>380</number></property>
+        <property name="maximumWidth"><number>380</number></property>
+        <layout class="QVBoxLayout">
+         <property name="spacing"><number>10</number></property>
+         <property name="leftMargin"><number>14</number></property>
+         <property name="topMargin"><number>14</number></property>
+         <property name="rightMargin"><number>14</number></property>
+         <property name="bottomMargin"><number>14</number></property>
+
+         <item>
+          <widget class="QLabel">
+           <property name="text"><string>Connected Device</string></property>
+           <property name="styleSheet"><string notr="true">color: #6b7280; font-size: 12px;</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <layout class="QGridLayout">
+           <property name="horizontalSpacing"><number>14</number></property>
+           <property name="verticalSpacing"><number>8</number></property>
+
+           <item row="0" column="0">
+            <widget class="QLabel">
+             <property name="text"><string>Model:</string></property>
+             <property name="styleSheet"><string notr="true">color: #6b7280;</string></property>
+             <property name="minimumWidth"><number>60</number></property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="model_value">
+             <property name="text"><string>—</string></property>
+             <property name="font"><font><weight>600</weight></font></property>
+            </widget>
+           </item>
+
+           <item row="1" column="0">
+            <widget class="QLabel">
+             <property name="text"><string>Serial:</string></property>
+             <property name="styleSheet"><string notr="true">color: #6b7280;</string></property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="serial_value">
+             <property name="text"><string>—</string></property>
+             <property name="font"><font><family>Consolas</family><pointsize>11</pointsize></font></property>
+            </widget>
+           </item>
+
+           <item row="2" column="0">
+            <widget class="QLabel">
+             <property name="text"><string>iOS:</string></property>
+             <property name="styleSheet"><string notr="true">color: #6b7280;</string></property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="ios_value">
+             <property name="text"><string>—</string></property>
+            </widget>
+           </item>
+
+           <item row="3" column="0">
+            <widget class="QLabel">
+             <property name="text"><string>IMEI:</string></property>
+             <property name="styleSheet"><string notr="true">color: #6b7280;</string></property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="imei_value">
+             <property name="text"><string>—</string></property>
+             <property name="font"><font><family>Consolas</family><pointsize>11</pointsize></font></property>
+            </widget>
+           </item>
+
+           <item row="4" column="0">
+            <widget class="QLabel">
+             <property name="text"><string>Status:</string></property>
+             <property name="styleSheet"><string notr="true">color: #6b7280;</string></property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="status_value">
+             <property name="text"><string>Disconnected</string></property>
+             <property name="font"><font><weight>600</weight></font></property>
+             <property name="styleSheet"><string notr="true">color: #ef4444;</string></property>
+            </widget>
+           </item>
+
+          </layout>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+      <!-- Progress Section -->
+      <item>
+       <widget class="QFrame" name="panel">
+        <property name="minimumWidth"><number>380</number></property>
+        <property name="maximumWidth"><number>380</number></property>
+        <layout class="QVBoxLayout">
+         <property name="spacing"><number>8</number></property>
+         <property name="leftMargin"><number>14</number></property>
+         <property name="topMargin"><number>14</number></property>
+         <property name="rightMargin"><number>14</number></property>
+         <property name="bottomMargin"><number>14</number></property>
+
+         <item>
+          <widget class="QProgressBar" name="progress_bar">
+           <property name="visible"><bool>false</bool></property>
+           <property name="value"><number>0</number></property>
+           <property name="textVisible"><bool>false</bool></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLabel" name="progress_label">
+           <property name="text"><string>Ready</string></property>
+           <property name="styleSheet"><string notr="true">color: #6b7280; font-size: 12px;</string></property>
+           <property name="alignment"><set>Qt::AlignCenter</set></property>
+          </widget>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+      <!-- DEV MODE: Manual GUID Input (Hidden by default) -->
+      <item>
+       <widget class="QFrame" name="dev_panel">
+        <property name="visible"><bool>false</bool></property>
+        <property name="minimumWidth"><number>380</number></property>
+        <property name="maximumWidth"><number>380</number></property>
+        <property name="styleSheet">
+         <string notr="true">
+QFrame#dev_panel {
+    background: #1f1a0a;
+    border: 1px solid #3f2f0a;
+    border-radius: 12px;
+}
+         </string>
+        </property>
+        <layout class="QVBoxLayout">
+         <property name="spacing"><number>8</number></property>
+         <property name="leftMargin"><number>14</number></property>
+         <property name="topMargin"><number>14</number></property>
+         <property name="rightMargin"><number>14</number></property>
+         <property name="bottomMargin"><number>14</number></property>
+
+         <item>
+          <widget class="QLabel">
+           <property name="text"><string>⚠️ DEV MODE: Manual GUID</string></property>
+           <property name="styleSheet"><string notr="true">color: #fbbf24; font-size: 11px; font-weight: bold;</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLineEdit" name="dev_guid_input">
+           <property name="placeholderText"><string>Enter GUID (e.g., 12345678-1234-1234-1234-123456789ABC)</string></property>
+           <property name="styleSheet">
+            <string notr="true">
+QLineEdit {
+    background: #0a0a0a;
+    border: 1px solid #3f2f0a;
+    border-radius: 6px;
+    padding: 8px;
+    color: #fbbf24;
+    font-family: "Consolas", monospace;
+    font-size: 11px;
+}
+            </string>
+           </property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLabel">
+           <property name="text"><string>Leave empty to extract from device</string></property>
+           <property name="styleSheet"><string notr="true">color: #6b7280; font-size: 10px;</string></property>
+           <property name="alignment"><set>Qt::AlignCenter</set></property>
+          </widget>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+      <!-- Spacer to push button to bottom -->
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+
+      <!-- Action Button - Docked at bottom -->
+      <item>
+       <widget class="QPushButton" name="activate_btn">
+        <property name="enabled"><bool>false</bool></property>
+        <property name="minimumHeight"><number>44</number></property>
+        <property name="minimumWidth"><number>380</number></property>
+        <property name="maximumWidth"><number>380</number></property>
+        <property name="text"><string>▶ START BYPASS</string></property>
+        <property name="font"><font><pointsize>14</pointsize><weight>75</weight><bold>true</bold></font></property>
+       </widget>
+      </item>
+
+      <!-- Footer -->
+      <item>
+       <widget class="QLabel">
+        <property name="text"><string>GSM Flow © 2026</string></property>
+        <property name="styleSheet"><string notr="true">color: #3f3f3f; font-size: 11px;</string></property>
+        <property name="alignment"><set>Qt::AlignCenter</set></property>
+       </widget>
+      </item>
+
+     </layout>
+    </item>
+
+    <!-- RIGHT COLUMN - Activity Log -->
+    <item>
+     <widget class="QGroupBox" name="groupBox_log">
+      <property name="title"><string>Activity Log</string></property>
+      <layout class="QVBoxLayout">
+       <property name="spacing"><number>10</number></property>
+       <property name="leftMargin"><number>14</number></property>
+       <property name="topMargin"><number>10</number></property>
+       <property name="rightMargin"><number>14</number></property>
+       <property name="bottomMargin"><number>14</number></property>
+       <item>
+        <widget class="QTextEdit" name="log_text">
+         <property name="readOnly"><bool>true</bool></property>
+         <property name="maximumHeight"><number>520</number></property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+   </layout>
+  </widget>
+
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
