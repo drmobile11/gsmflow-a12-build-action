@@ -1,0 +1,42 @@
+/* gui/styles/activate_button.qss */
+/* Professional button styling matching main_GUI_windows.py */
+
+QPushButton[state="waiting"],
+QPushButton:disabled {
+    background-color: #020617;
+    color: #64748b;
+    border: 1px solid #1e293b;
+    border-radius: 18px;
+    padding: 14px 28px;
+    font-weight: 600;
+    font-size: 14pt;
+    font-family: "Segoe UI Variable", "Segoe UI", Arial;
+}
+
+QPushButton[state="waiting"]:hover,
+QPushButton:disabled:hover {
+    background-color: #0f172a;
+}
+
+QPushButton[state="ready"],
+QPushButton:enabled {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                                stop:0 #22c55e, stop:1 #16a34a);
+    color: #ecfdf5;
+    border: none;
+    border-radius: 18px;
+    padding: 14px 28px;
+    font-weight: bold;
+    font-size: 14pt;
+    font-family: "Segoe UI Variable", "Segoe UI", Arial;
+    min-width: 200px;
+}
+
+QPushButton[state="ready"]:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
+                                stop:0 #2dd4bf, stop:1 #14b8a6);
+}
+
+QPushButton[state="ready"]:pressed {
+    background: #15803d;
+}

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CustomMessageBoxUI</class>
+ <widget class="QDialog" name="CustomMessageBoxUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>520</width>
+    <height>340</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Device Authorization</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QDialog {
+    background-color: #000000;
+    color: #e5e7eb;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+QLabel {
+    color: #e5e7eb;
+    background: transparent;
+    border: none;
+}
+QPushButton {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 13px;
+}
+QPushButton:hover {
+    background: #3b82f6;
+}
+QPushButton:pressed {
+    background: #1d4ed8;
+}
+QPushButton#btnCancel {
+    background: #1f1f1f;
+    color: #9ca3af;
+}
+QPushButton#btnCancel:hover {
+    background: #2d2d2d;
+}
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing"><number>16</number></property>
+   <property name="leftMargin"><number>24</number></property>
+   <property name="topMargin"><number>24</number></property>
+   <property name="rightMargin"><number>24</number></property>
+   <property name="bottomMargin"><number>24</number></property>
+
+   <!-- Icon and Title -->
+   <item>
+    <layout class="QVBoxLayout">
+     <property name="spacing"><number>8</number></property>
+     <item>
+      <widget class="QLabel">
+       <property name="text"><string>⚠️</string></property>
+       <property name="alignment"><set>Qt::AlignCenter</set></property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 48px; margin-bottom: 8px;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTitle">
+       <property name="font">
+        <font>
+         <pointsize>18</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+color: #fbbf24;
+font-size: 20px;
+font-weight: bold;
+        </string>
+       </property>
+       <property name="text">
+        <string>Device Not Authorized</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- Message -->
+   <item>
+    <widget class="QLabel" name="labelMessage">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+font-size: 14px;
+color: #9ca3af;
+line-height: 1.5;
+      </string>
+     </property>
+     <property name="text">
+      <string>This device requires authorization before activation.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Serial Number Badge -->
+   <item>
+    <widget class="QLabel" name="labelSerial">
+     <property name="font">
+      <font>
+       <family>Consolas</family>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+font-size: 15px;
+font-weight: bold;
+color: #ffffff;
+background-color: #1f1f1f;
+padding: 14px;
+border: 1px solid #3f3f3f;
+border-radius: 10px;
+      </string>
+     </property>
+     <property name="text">
+      <string>Serial: XXXXX</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Info Text -->
+   <item>
+    <widget class="QLabel" name="labelInfo">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+font-size: 12px;
+color: #6b7280;
+      </string>
+     </property>
+     <property name="text">
+      <string>Click 'Proceed to Order' to continue with authorization</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Spacer -->
+   <item>
+    <spacer>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size><width>20</width><height>10</height></size>
+     </property>
+    </spacer>
+   </item>
+
+   <!-- Buttons -->
+   <item>
+    <layout class="QHBoxLayout">
+     <property name="spacing"><number>12</number></property>
+     <item>
+      <widget class="QPushButton" name="btnCancel">
+       <property name="minimumHeight"><number>42</number></property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnProceed">
+       <property name="minimumHeight"><number>42</number></property>
+       <property name="text">
+        <string>Proceed to Order</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,87 @@
+name: Build Secure Executable
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        architecture: 'x64'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install cryptography ordered-set
+        
+    - name: Build with Nuitka (Maximum Security)
+      uses: Nuitka/Nuitka-Action@main
+      with:
+        nuitka-version: main
+        script-name: main.py
+        mode: standalone
+        enable-plugins: pyqt5
+        include-package: |
+          PyQt5
+          pymobiledevice3
+          requests
+          urllib3
+          certifi
+          chardet
+          idna
+          cryptography
+        include-plugin-directory: |
+          core
+          gui
+          security
+          utils
+        include-data-dir: |
+          libs=libs
+        windows-console-mode: disable
+        deployment: true
+        no-deployment-flag: self-execution
+        output-dir: build/nuitka_secure
+        
+    - name: Generate SHA256 hash
+      run: |
+        $hash = Get-FileHash "build/nuitka_secure/main.exe" -Algorithm SHA256
+        $hash.Hash | Out-File "build/nuitka_secure/main.exe.sha256"
+        Write-Host "SHA256: $($hash.Hash)"
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: A12Bypass-Secure-Windows-${{ github.sha }}
+        path: |
+          build/nuitka_secure/*
+          !build/nuitka_secure/.session_key
+        retention-days: 30
+        include-hidden-files: true
+        
+    - name: Create release archive
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        Compress-Archive -Path "build/nuitka_secure/*" -DestinationPath "A12Bypass-Secure.zip" -Force
+        
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: A12Bypass-Secure.zip
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
