@@ -42,41 +42,10 @@ jobs:
         # Install Nuitka directly for better control
         pip install nuitka --upgrade
         
-        # Build with verbose progress output
-        python -m nuitka \
-          --mode=onefile \
-          --deployment \
-          --python-flag=no_site \
-          --enable-plugin=pyqt5 \
-          --follow-imports \
-          --include-package=PyQt5 \
-          --include-package=pymobiledevice3 \
-          --include-package=requests \
-          --include-package=urllib3 \
-          --include-package=certifi \
-          --include-package=chardet \
-          --include-package=idna \
-          --include-package=cryptography \
-          --include-plugin-directory=core \
-          --include-plugin-directory=gui \
-          --include-plugin-directory=security \
-          --include-plugin-directory=utils \
-          --include-data-dir=libs=libs \
-          --windows-console-mode=disable \
-          --no-deployment-flag=self-execution \
-          --output-dir=build/nuitka_secure \
-          --user-package-configuration-file=nuitka.ini \
-          --verbose \
-          --progress \
-          main.py
+        # Build with verbose progress output (onefile mode)
+        python -m nuitka --mode=onefile --deployment --python-flag=no_site --enable-plugin=pyqt5 --follow-imports --include-package=PyQt5 --include-package=pymobiledevice3 --include-package=requests --include-package=urllib3 --include-package=certifi --include-package=chardet --include-package=idna --include-package=cryptography --include-plugin-directory=core --include-plugin-directory=gui --include-plugin-directory=security --include-plugin-directory=utils --include-data-dir=libs=libs --windows-console-mode=disable --no-deployment-flag=self-execution --output-dir=build/nuitka_secure --user-package-configuration-file=nuitka.ini --verbose --progress main.py
         
-        # Move files from main.dist to output folder (Nuitka creates main.dist in standalone mode)
-        if (Test-Path "build/nuitka_secure/main.dist") {
-            Copy-Item -Path "build/nuitka_secure/main.dist/*" -Destination "build/nuitka_secure/" -Recurse -Force
-            Remove-Item -Path "build/nuitka_secure/main.dist" -Recurse -Force
-        }
-        
-        # List output files for debugging
+        # List output files for debugging (onefile mode - no main.dist folder)
         Write-Host "Output files:"
         Get-ChildItem "build/nuitka_secure" | Select-Object Name, Length
         
