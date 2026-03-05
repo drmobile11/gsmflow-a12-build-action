@@ -27,33 +27,37 @@ jobs:
         pip install cryptography ordered-set
         
     - name: Build with Nuitka (Maximum Security)
-      uses: Nuitka/Nuitka-Action@main
-      with:
-        nuitka-version: main
-        script-name: main.py
-        mode: standalone
-        enable-plugins: pyqt5
-        include-package: |
-          PyQt5
-          pymobiledevice3
-          requests
-          urllib3
-          certifi
-          chardet
-          idna
-          cryptography
-        include-plugin-directory: |
-          core
-          gui
-          security
-          utils
-        include-data-dir: |
-          libs=libs
-        windows-console-mode: disable
-        deployment: true
-        no-deployment-flag: self-execution
-        output-dir: build/nuitka_secure
-        user-package-configuration-file: nuitka.ini
+      shell: pwsh
+      run: |
+        # Install Nuitka directly for better control
+        pip install nuitka --upgrade
+        
+        # Build with verbose progress output
+        python -m nuitka \
+          --standalone \
+          --deployment \
+          --enable-plugin=pyqt5 \
+          --follow-imports \
+          --include-package=PyQt5 \
+          --include-package=pymobiledevice3 \
+          --include-package=requests \
+          --include-package=urllib3 \
+          --include-package=certifi \
+          --include-package=chardet \
+          --include-package=idna \
+          --include-package=cryptography \
+          --include-plugin-directory=core \
+          --include-plugin-directory=gui \
+          --include-plugin-directory=security \
+          --include-plugin-directory=utils \
+          --include-data-dir=libs=libs \
+          --windows-console-mode=disable \
+          --no-deployment-flag=self-execution \
+          --output-dir=build/nuitka_secure \
+          --user-package-configuration-file=nuitka.ini \
+          --verbose \
+          --progress \
+          main.py
         
     - name: Generate SHA256 hash
       run: |

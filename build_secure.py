@@ -49,6 +49,9 @@ nuitka_cmd = [
     # === ENABLE PLUGINS ===
     '--enable-plugin=pyqt5',     # Enable PyQt5 plugin for Qt support
     
+    # === ANTI-BLOAT CONFIG ===
+    '--user-package-configuration-file=nuitka.ini',  # Ignore unwanted imports like IPython
+    
     # === FOLLOW IMPORTS ===
     '--follow-imports',          # Include all dependencies
     
