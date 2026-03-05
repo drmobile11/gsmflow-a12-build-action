@@ -53,6 +53,7 @@ jobs:
         deployment: true
         no-deployment-flag: self-execution
         output-dir: build/nuitka_secure
+        user-package-configuration-file: nuitka.ini
         
     - name: Generate SHA256 hash
       run: |
